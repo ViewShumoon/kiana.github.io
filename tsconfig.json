@@ -46,7 +46,9 @@
 
         "@utils/*": ["./src/utils/*"]
     },
+		"types": ["@cloudflare/workers-types"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+	"exclude": ["dist", "test"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

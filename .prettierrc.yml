@@ -1,4 +1,4 @@
-useTabs: false
+useTabs: true
 tabWidth: 4
 end_of_line: "lf"
 trailingComma: "all"
@@ -6,7 +6,7 @@ singleQuote: false
 arrowParens: "always"
 # 分号
 semi: true 
-
+insertPragma: false
 overrides: 
   - files: "*.json"
     options:
