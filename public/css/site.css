@@ -4,6 +4,10 @@ html,body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: "Cascadia Code", "HarmonyOS Sans", "Microsoft YaHei UI", Consolas, 'Courier New', monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
 }
 
 *,
@@ -15,9 +19,6 @@ html,body {
 
 body {
     background-color: #1e1e1e;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
     color: #fff;
 }
 

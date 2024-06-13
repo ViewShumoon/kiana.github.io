@@ -34,15 +34,15 @@
     "baseUrl": "./",
     "paths": {
         "@/*": ["./src/*"],
-        "@api/*": ["./src/api/*"],
-        "@components/*": ["./src/components/*"],
-        "@types/*": ["src/types/*"],
-        "@services/*": ["./src/services/*"],
-        "@views/*": ["./src/views/*"],
-        //"@configurations/*": ["src/configurations/*"],
-        //"@router/*": ["src/router/*"],
         "@assets/*": ["./src/assets/*"],
-        //"@stores/*": ["src/stores/*"],
+
+        "@types/*": ["src/types/*"],
+        "@components/*": ["./src/components/*"],
+        "@views/*": ["./src/views/*"],
+        "@router/*": ["src/router/*"],
+
+        "@api/*": ["./src/api/*"],
+        "@stores/*": ["src/stores/*"],
 
         "@utils/*": ["./src/utils/*"]
     },
