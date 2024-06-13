@@ -1,4 +1,9 @@
 {
+	"extends": [
+		"@vue/tsconfig/tsconfig.json",
+		"@tsconfig/node18/tsconfig.json",
+		"@vue/tsconfig/tsconfig.json"
+	],
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
