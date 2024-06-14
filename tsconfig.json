@@ -38,7 +38,8 @@
         "@types/*": ["src/types/*"],
         "@components/*": ["./src/components/*"],
         "@views/*": ["./src/views/*"],
-        "@router/*": ["src/router/*"],
+        "@routes/*": ["src/routes/*"],
+        "@services/*": ["src/services/*"],
 
         "@api/*": ["./src/api/*"],
         "@stores/*": ["src/stores/*"],
@@ -46,6 +47,11 @@
         "@utils/*": ["./src/utils/*"]
     },
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts", 
+    "src/**/*.tsx", 
+    "src/**/*.vue"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

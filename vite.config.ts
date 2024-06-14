@@ -37,8 +37,15 @@ export default defineConfig((({ mode }) => {
         plugins: [
             vue(),
             AutoImport({
+                include: [
+                    /\.[tj]sx?$/, 
+                    /\.vue$/, 
+                    /\.vue\?vue/, 
+                    /\.md$/,
+                ],
                 imports: [
                     "vue",
+                    'vue-router',
                     // {
                     //     "naive-ui": [
                     //         "useDialog",
@@ -71,7 +78,8 @@ export default defineConfig((({ mode }) => {
                 "@types": resolve("./src/types"),
                 "@components": resolve("./src/components"),
                 "@views": resolve("./src/views"),
-                '@router': resolve('./src/router'),
+                '@routes': resolve('./src/routes'),
+                '@services': resolve('./src/services'),
                 
                 "@api": resolve("./src/api"),
                 "@stores": resolve("./src/stores"),
