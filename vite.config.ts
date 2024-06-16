@@ -46,14 +46,14 @@ export default defineConfig((({ mode }) => {
                 imports: [
                     "vue",
                     'vue-router',
-                    // {
-                    //     "naive-ui": [
-                    //         "useDialog",
-                    //         //"useMessage",
-                    //         //"useNotification",
-                    //         //"useLoadingBar",
-                    //     ],
-                    // },
+                    {
+                        "naive-ui": [
+                            "useDialog",
+                            "useLoadingBar",
+                            "useMessage",
+                            "useNotification",
+                        ],
+                    },
                 ],
                 resolvers: [NaiveUiResolver()],
                 dts: path.resolve(resolve("src/types/auto-imports.d.ts")),

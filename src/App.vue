@@ -2,7 +2,7 @@
   <n-config-provider :theme="darkTheme">
     <WindowProvider>
 
-        <HelloWorld msg="Vite + Vue" />
+        <RouterView />
       
     </WindowProvider>
   </n-config-provider>

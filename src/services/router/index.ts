@@ -9,8 +9,7 @@ const router = createRouter({
 
 // 全局前置守卫，这里可以加入用户登录判断
 router.beforeEach((to, from, next) => {
-    // 继续前进 next()
-    // 返回 false 以取消导航
+ 
     next()
 })
 
