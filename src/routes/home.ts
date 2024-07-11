@@ -3,8 +3,8 @@ import { type RouteRecordRaw } from 'vue-router'
 export default {
     path: '/',
     name: 'index',
-    component: () => import("@components/HelloWorld.vue"),
+    component: () => import("@components/NyanCat.vue"),
     meta: {
-        title: "主页"
+        title: "Nyan Cat"    
     }
 } satisfies RouteRecordRaw

@@ -12,8 +12,6 @@
 <script setup lang="ts">
 import { darkTheme } from 'naive-ui'
 
-import HelloWorld from './components/HelloWorld.vue'
-
 </script>
 
 <style scoped>

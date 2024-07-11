@@ -8,11 +8,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
+    Menu: typeof import('./../components/menu.vue')['default']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    NyanCat: typeof import('./../components/NyanCat.vue')['default']
     WindowProvider: typeof import('./../components/WindowProvider/WindowProvider.vue')['default']
   }
 }
