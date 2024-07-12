@@ -1,11 +1,12 @@
 <template>
-    <vue-particles
-            id="tsparticles"
-            :options="config"
-        />
+    <BaseDrag class="position-absolute image-container">
+      <img :src="nyanCat" class="cat-image "/>
+    </BaseDrag>
+    <vue-particles class="z-0 position-absolute" id="tsparticles" :options="config" />
 </template>
 
 <script setup lang="ts">
+import nyanCat from '@assets/cat.gif'
 
 const config = {
   "autoPlay": true,
@@ -13,7 +14,6 @@ const config = {
     "color": {
       "value": "#043564"
     },
-    "image": "url('../assets/cat.gif')",
     "position": "0 50%",
     "repeat": "no-repeat",
     "size": "60%",
@@ -34,7 +34,7 @@ const config = {
   "delay": 0,
   "fullScreen": {
     "enable": true,
-    "zIndex": 0
+    "zIndex": -1
   },
   "detectRetina": true,
   "duration": 0,
@@ -393,5 +393,38 @@ const config = {
 </script>
 
 <style scoped>
+
+.cat-image {
+  user-select: none;
+  width: 64rem;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+}
+
+.image-container {
+    top: 50%;
+}
+
+@media (min-width: 192px) {
+  .image-container {
+    left: -20%;
+  }
+}
+
+@media (min-width: 576px) {
+  .image-container {
+    left: 10%;
+  }
+}
+@media (min-width: 768px) {
+  .image-container {
+    left: 20%;
+  }
+}
+@media (min-width: 992px) {
+  .image-container {
+    left: 30%;
+  }
+}
 
 </style>

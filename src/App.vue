@@ -1,11 +1,13 @@
 <template>
+  <RouterView />
+<!--   
   <n-config-provider :theme="darkTheme">
     <WindowProvider>
 
-        <RouterView />
+        
       
     </WindowProvider>
-  </n-config-provider>
+  </n-config-provider> -->
 
 </template>
 

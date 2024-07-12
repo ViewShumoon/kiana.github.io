@@ -54,6 +54,9 @@ export default defineConfig((({ mode }) => {
                             "useNotification",
                         ],
                     },
+                    // {
+                    //     "draggable-vue-directive": ['Draggable']
+                    // }
                 ],
                 resolvers: [NaiveUiResolver()],
                 dts: path.resolve(resolve("src/types/auto-imports.d.ts")),

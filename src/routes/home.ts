@@ -3,7 +3,7 @@ import { type RouteRecordRaw } from 'vue-router'
 export default {
     path: '/',
     name: 'index',
-    component: () => import("@components/NyanCat.vue"),
+    component: () => import("@/views/NyanCat.vue"),
     meta: {
         title: "Nyan Cat"    
     }
