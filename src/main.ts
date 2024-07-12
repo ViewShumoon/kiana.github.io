@@ -9,11 +9,14 @@ import { moveDirectivePlugin } from 'lite-move';
 
 const app = createApp(App);
 app.use(router);
+
+// @ts-ignore
 app.use(Particles, {
     init: async (engine) =>  {
         await loadSlim(engine);
     },
-});
+}); 
+
 app.use(moveDirectivePlugin)
 
 app.mount('#app');
