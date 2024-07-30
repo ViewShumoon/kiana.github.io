@@ -8,6 +8,8 @@ import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadFu
 
 const app = createApp(App);
 app.use(router);
+
+// @ts-ignore
 app.use(Particles, {
     init: async (engine) =>  {
         await loadSlim(engine);

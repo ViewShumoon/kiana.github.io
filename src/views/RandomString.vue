@@ -19,20 +19,20 @@
 
                 <n-grid-item span="2">
                     <n-form-item label="生成字符串长度">
-                        <n-input-number v-model:value="optionsRef.length" :min="1" :max="100" />
+                        <n-input-number v-model:value="optionsRef.length" :min="1" :max="1024" />
                     </n-form-item>
-                    <n-form-item label="生成个数">
-                        <n-input-number v-model:value="optionsRef.count" :min="1" :max="100" />
+                    <n-form-item label="生成数量">
+                        <n-input-number v-model:value="optionsRef.generateCount" :min="1" :max="64" />
                     </n-form-item>
                 </n-grid-item>
             </n-grid>
 
             <n-form-item label="排除的字符">
-                <n-input v-model:value="optionsRef.excludeChars" placeholder="输入需要排除的字符" />
+                <n-input v-model:value="optionsRef.excludeChars" placeholder="例如: 0O 1iI" />
             </n-form-item>
 
             <n-form-item>
-                <n-button secondary strong type="primary" size="large" @click="generateStrings">生成</n-button>
+                <n-button type="primary" size="large" @click="generateStrings">生成</n-button>
             </n-form-item>
         </n-form>
 
@@ -44,9 +44,14 @@
                 </tr>
             </thead> -->
             <tbody>
-                <tr v-for="(str, index) in generatedResultsRef" :key="index">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ str }}</td>
+                <tr v-for="(value, index) in generatedResultsRef" :key="index">
+                    <td>
+                        <CopyToClipboardButton class="me-2" :value="value">
+                            复制
+                        </CopyToClipboardButton>
+                        <n-divider vertical />
+                        {{ value }}
+                    </td>
                 </tr>
             </tbody>
         </n-table></n-card>
@@ -73,28 +78,30 @@
 项目使用 Vite 的 Vue 3，使用 TypeScript, 页面使用 naive-ui
 */
 
-import type { GenerateOptions } from '@/types/Random';
+import type { RandomStringGenerateOptions } from '@/types/Random';
 
 
-const optionsRef = ref<GenerateOptions>({
+const optionsRef = ref<RandomStringGenerateOptions>({
     includeLowercase: true,
     includeUppercase: true,
     includeNumbers: true,
     includeSpecialChars: false,
     excludeChars: '',
     length: 16,
-    count: 4,
+    generateCount: 4,
 });
 
 const generatedResultsRef = ref<string[]>([]);
 
+generateStrings();
+
 function generateStrings() {
-    const result = Array.from({ length: optionsRef.value.count }, () => generateRandomString(optionsRef.value));
+    const result = Array.from({ length: optionsRef.value.generateCount }, () => generateRandomString(optionsRef.value));
 
     generatedResultsRef.value = result;
 }
 
-function generateRandomString(options: GenerateOptions): string {
+function generateRandomString(options: RandomStringGenerateOptions): string {
     let charset = getCharset(options);
 
     let result = '';
@@ -105,7 +112,7 @@ function generateRandomString(options: GenerateOptions): string {
     return result;
 }
 
-function getCharset(options: GenerateOptions): string {
+function getCharset(options: RandomStringGenerateOptions): string {
     let charset = '';
     if (options.includeLowercase) {
         charset += 'abcdefghijklmnopqrstuvwxyz';

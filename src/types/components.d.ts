@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CopyToClipboardButton: typeof import('./../components/CopyToClipboardButton.vue')['default']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     Menu: typeof import('./../components/menu.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
