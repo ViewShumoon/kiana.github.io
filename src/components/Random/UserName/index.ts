@@ -1,5 +1,3 @@
-
-
 const allWordLists = import.meta.glob(['./*.json', '!./index.ts'], { eager: true });
 
 // ["english", "american", "australian", "british", "canadian"].forEach(

@@ -2,19 +2,31 @@ import { type RouteRecordRaw } from "vue-router";
 
 export default [
     {
-        path: "/RandomString",
-        name: "RandomString",
-        component: () => import("@/views/RandomString.vue"),
+        path: "/Random",
+        name: "Random",
+        component: () => import("@views/Random.vue"),
+        redirect: { name: 'RandomString' },
         meta: {
-            title: "RandomString",
+            title: "Random",
         },
-    },
-    {
-        path: "/RandomUserName",
-        name: "RandomUserName",
-        component: () => import("@/views/RandomUserName.vue"),
-        meta: {
-            title: "RandomUserName",
-        },
+        children: [
+            {
+                path: "String",
+                name: "RandomString",
+                component: () => import("@/components/Random/RandomString.vue"),
+                meta: {
+                    title: "Random String",
+                },
+            },
+            {
+                path: "UserName",
+                name: "RandomUserName",
+                component: () =>
+                    import("@/components/Random/RandomUserName.vue"),
+                meta: {
+                    title: "Random UserName",
+                },
+            },
+        ],
     },
 ] satisfies RouteRecordRaw[];

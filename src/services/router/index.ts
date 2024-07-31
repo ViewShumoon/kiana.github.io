@@ -19,6 +19,11 @@ router.afterEach((to, from) => {
     if (title) {
         window.document.title = title as string
     }
+
+    // const icon = to.meta.icon
+    // if (icon) { 
+        
+    // }
 })
 
 export default router;
