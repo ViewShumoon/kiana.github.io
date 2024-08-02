@@ -31,7 +31,7 @@
             </n-form-item>
         </n-form>
         <n-divider />
-        <n-table :bordered="false" :single-line="false">
+        <n-table :bordered="false" :single-line="false" striped>
             <tbody>
                 <tr v-for="(value, index) in generatedNamesRef" :key="index">
                     <td>
@@ -71,7 +71,7 @@
 原理是随机从预设的词语列表中随机选取参数中指定个数的词语，如果参数中使用完整词语就不截取，如果不使用完整词语就将词语截取一半左右，然后将词语拼接起来
 */
 
-import wordlist from '@/components/Random/UserName';
+import allWordsMap from '@/components/Random/UserName';
 import { LanguageMode, type RandomUserNameGenerateOptions } from '@/types/Random';
 import type { SelectOption } from 'naive-ui/es/select/src/interface';
 
@@ -93,7 +93,7 @@ const generateOptionsRef = ref<RandomUserNameGenerateOptions>({
 });
 
 const wordsMap: Map<LanguageMode, string[]> = new Map<LanguageMode, string[]>([
-    [LanguageMode.english, wordlist.get('english')!]
+    [LanguageMode.english, allWordsMap.get('english')!]
 ]);
 
 const generatedNamesRef = ref<string[]>([]);
@@ -112,7 +112,9 @@ function generateRandomName(options: RandomUserNameGenerateOptions): string {
     for (let i = 0; i < options.wordCount; i++) {
         let word = words[Math.floor(Math.random() * words.length)];
         if (!options.useFullWords) {
-            word = word.slice(0, Math.floor(word.length / 2));
+            var randomOffset = GetRandomInt(-2, 2);
+            var offset = Math.floor(word.length / 2) + randomOffset
+            word = word.slice(0, offset);
         }
         if (options.dashStriped && i < options.wordCount - 1) {
             word += '-';
@@ -127,12 +129,9 @@ function generateRandomName(options: RandomUserNameGenerateOptions): string {
     return result;
 }
 
-function onCopyButtonClicked(value: string)
-{
-    navigator.clipboard.writeText(value).then(()=>{
-        window.$message.success('复制成功');
-    })
-
+function GetRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min) + min); // 不包含最大值，包含最小值
 }
+
 
 </script>

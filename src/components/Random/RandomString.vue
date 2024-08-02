@@ -35,14 +35,8 @@
                 <n-button type="primary" size="large" @click="generateStrings">生成</n-button>
             </n-form-item>
         </n-form>
-
+        <n-divider />
         <n-table :bordered="false" :single-line="false" striped>
-            <!-- <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>随机字符串</th>
-                </tr>
-            </thead> -->
             <tbody>
                 <tr v-for="(value, index) in generatedResultsRef" :key="index">
                     <td>

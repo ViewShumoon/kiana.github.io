@@ -1,36 +1,25 @@
-const allWordLists = import.meta.glob(['./*.json', '!./index.ts'], { eager: true });
+const englishWordLists = import.meta.glob(['./english/*.json'], { eager: true });
+//const chineseWordLists = import.meta.glob(['./chinese/*.json'], { eager: true });
 
-// ["english", "american", "australian", "british", "canadian"].forEach(
-//     function(dialect) {
+let allWordsMap: Map<string, string[]> = new Map<string, string[]>();
 
-//     }
-// );
 
-var wordlist: Map<string, string[]> = new Map<string, string[]>();
+GetWords("english", englishWordLists);
 
-for (const path in allWordLists) {
-    const module: any = allWordLists[path];
-    const data = module.default;
-    //console.log(path, data)
+function GetWords(key: string, moduelList : Record<string, unknown>) {
+    for (const path in moduelList) {
+        const module: any = moduelList[path];
+        const data = module.default;
 
-    const dialectKey = path.substring(2, path.indexOf("-"));
+        let dialectWors: string[] = [];
+        if (Array.isArray(data)) {
+            dialectWors.push(...data);
+        } else {
+            dialectWors.push(data);
+        }
 
-    let words: string[] = [];
-    if (Array.isArray(data)) {
-        words.push(...data);
-    } else {
-        words.push(data);
-    }
-    
-    let dialectWors = wordlist.get(dialectKey);
-    if (dialectWors) {
-        dialectWors.push(...words);
-        wordlist.set(dialectKey, dialectWors);
-    } else {
-        wordlist.set(dialectKey, words);
+        allWordsMap.set(key, dialectWors);
     }
 }
 
-
-
-export default wordlist;
+export default allWordsMap;
