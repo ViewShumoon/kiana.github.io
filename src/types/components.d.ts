@@ -33,6 +33,7 @@ declare module 'vue' {
     RandomMenus: typeof import('./../components/Random/RandomMenus.vue')['default']
     RandomString: typeof import('./../components/Random/RandomString.vue')['default']
     RandomUserName: typeof import('./../components/Random/RandomUserName.vue')['default']
+    BaseDrag: typeof import('./../components/BaseDrag.vue')['default']
     WindowProvider: typeof import('./../components/WindowProvider/WindowProvider.vue')['default']
   }
 }

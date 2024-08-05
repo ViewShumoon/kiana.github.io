@@ -5,6 +5,7 @@ import router from '@services/router/index';
 
 import Particles from "@tsparticles/vue3";
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadFull`, install the "tsparticles" package too.
+import { moveDirectivePlugin } from 'lite-move';
 
 const app = createApp(App);
 app.use(router);
@@ -14,6 +15,9 @@ app.use(Particles, {
     init: async (engine) =>  {
         await loadSlim(engine);
     },
-});
+}); 
+
+app.use(moveDirectivePlugin)
 
 app.mount('#app');
+
