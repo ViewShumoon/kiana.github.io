@@ -7,9 +7,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BaseDrag: typeof import('./../components/BaseDrag.vue')['default']
     CopyToClipboardButton: typeof import('./../components/CopyToClipboardButton.vue')['default']
     Error: typeof import('./../views/Error.vue')['default']
-    HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
+    HelloWorld: typeof import('./../views/HelloWorld.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
@@ -33,7 +34,6 @@ declare module 'vue' {
     RandomMenus: typeof import('./../components/Random/RandomMenus.vue')['default']
     RandomString: typeof import('./../components/Random/RandomString.vue')['default']
     RandomUserName: typeof import('./../components/Random/RandomUserName.vue')['default']
-    BaseDrag: typeof import('./../components/BaseDrag.vue')['default']
     WindowProvider: typeof import('./../components/WindowProvider/WindowProvider.vue')['default']
   }
 }
