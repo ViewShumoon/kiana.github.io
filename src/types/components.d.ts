@@ -8,6 +8,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseDrag: typeof import('./../components/BaseDrag.vue')['default']
+    Command: typeof import('./../views/Command/Command.vue')['default']
+    CommandGive: typeof import('./../components/Command/Tarkov/CommandGive.vue')['default']
+    CommandStarsector: typeof import('./../views/Command/CommandStarsector.vue')['default']
+    CommandTarkov: typeof import('./../views/Command/CommandTarkov.vue')['default']
+    CommandTask: typeof import('./../components/Command/Tarkov/CommandTask.vue')['default']
     CopyToClipboardButton: typeof import('./../components/CopyToClipboardButton.vue')['default']
     Error: typeof import('./../views/Error.vue')['default']
     HelloWorld: typeof import('./../views/HelloWorld.vue')['default']
