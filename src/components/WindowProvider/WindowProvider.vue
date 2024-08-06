@@ -1,28 +1,24 @@
 <template>
-    <n-config-provider :locale="zhCN" :date-locale="dateZhCN" wh-full>
-        <n-dialog-provider>
-            <window-dialog />
-            <n-notification-provider>
-                <window-notification />
-                <n-message-provider>
-                    <window-message />
-                        <!-- <slot name="default"></slot> -->
-
-                        <n-loading-bar-provider>
-                            <window-loading-bar />
-                            <slot name="default"></slot>
-                        </n-loading-bar-provider>
-                </n-message-provider>
-            </n-notification-provider>
-        </n-dialog-provider>
-    </n-config-provider>
+    <n-dialog-provider>
+        <DialogContent />
+        <n-notification-provider>
+            <NotificationContent/>
+            <n-message-provider>
+                <MessageContent/>
+                    <n-loading-bar-provider>
+                        <LoadingBarContent/>
+                        <slot name="default"></slot>
+                    </n-loading-bar-provider>
+            </n-message-provider>
+        </n-notification-provider>
+    </n-dialog-provider>
 </template>
   
 <script setup lang="ts">
-import { zhCN, dateZhCN } from "naive-ui";
-import WindowDialog from "./WindowDialog";
-import WindowLoadingBar from "./WindowLoadingBar";
-import WindowMessage from "./WindowMessage";
-import WindowNotification from "./WindowNotification";
+import DialogContent from "./WindowDialog";
+import NotificationContent from "./WindowNotification";
+import MessageContent from "./WindowMessage";
+import LoadingBarContent from "./WindowLoadingBar";
+
 </script>
 <style scoped></style>

@@ -1,17 +1,11 @@
 <template>
-    <n-menu
-        v-model:value="activeKey"
-        mode="horizontal"
-        :options="menuOptions"
-        responsive
-      />
+    <Menus :menus="menuOptions"></Menus>
+    <RouterView></RouterView>
 </template>
 
 <script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router';
 import { type MenuOption } from 'naive-ui'
-import { RouterLink } from 'vue-router';
-
-const activeKey = ref<string | null>("RandomString")
 
 const menuOptions: MenuOption[] = [ 
   {
