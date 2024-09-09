@@ -11,6 +11,7 @@ declare module 'vue' {
     CopyToClipboardButton: typeof import('./../components/CopyToClipboardButton.vue')['default']
     Error: typeof import('./../views/Error.vue')['default']
     HelloWorld: typeof import('./../views/HelloWorld.vue')['default']
+    Maimai: typeof import('./../views/maimai.vue')['default']
     Menus: typeof import('./../components/Menus.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
@@ -37,6 +38,7 @@ declare module 'vue' {
     Random: typeof import('./../views/Random/Random.vue')['default']
     RandomString: typeof import('./../views/Random/RandomString.vue')['default']
     RandomUserName: typeof import('./../views/Random/RandomUserName.vue')['default']
+    RedirectTo: typeof import('./../components/RedirectTo.vue')['default']
     WindowProvider: typeof import('./../components/WindowProvider/WindowProvider.vue')['default']
   }
 }
