@@ -1,61 +1,52 @@
 {
-	"extends": [
-		"@vue/tsconfig/tsconfig.json",
-		"@tsconfig/node18/tsconfig.json"
-	],
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": [
-      "ES2020",
-      "ES2021.String", 
-      "ES2021.Promise",
-      "DOM", 
-      "DOM.Iterable"
-    ],
-    "skipLibCheck": true,
+	"extends": ["@vue/tsconfig/tsconfig.json", "@tsconfig/node18/tsconfig.json"],
+	"compilerOptions": {
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"lib": ["ES2020", "ES2021.String", "ES2021.Promise", "DOM", "DOM.Iterable"],
+		"skipLibCheck": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
 		"esModuleInterop": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "preserve",
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true,
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noFallthroughCasesInSwitch": true,
 
-    "baseUrl": "./",
-    "paths": {
-        "@/*": ["src/*"],
-        "@assets/*": ["src/assets/*"],
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["src/*"],
 
-        "@types/*": ["src/types/*"],
-        "@components/*": ["src/components/*"],
-        "@views/*": ["src/views/*"],
-        "@routes/*": ["src/routes/*"],
-        "@services/*": ["src/services/*"],
+			"@assets/*": ["src/assets/*"],
+			"@types/*": ["src/types/*"],
+			"@components/*": ["src/components/*"],
+			"@views/*": ["src/views/*"],
+			"@services/*": ["src/services/*"],
+			"@routes/*": ["src/routes/*"],
 
-        "@api/*": ["src/api/*"],
-        "@stores/*": ["src/stores/*"],
+			"@api/*": ["src/api/*"],
+			"@stores/*": ["src/stores/*"],
 
-        "@utils/*": ["src/utils/*"]
-    },
-		"types": ["vite/client"] 
-  },
-  "include": [
-    "src/**/*.ts", 
-    "src/**/*.d.ts", 
-    "src/**/*.tsx", 
-    "src/**/*.vue",
+			"@utils/*": ["src/utils/*"]
+		},
+		"types": ["vite/client"]
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
 		"types/**/*.d.ts"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }],
+	],
+	"references": [{ "path": "./tsconfig.node.json" }]
 	// "type":["node"]
 }

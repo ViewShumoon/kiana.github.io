@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { RedirectToMode } from '@types/RedirectToMode';
+import {  RedirectToMode } from '@/types/RedirectToMode';
 
 const url = "https://www.diving-fish.com/maimaidx/prober/";
 
