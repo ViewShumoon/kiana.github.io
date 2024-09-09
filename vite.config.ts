@@ -75,19 +75,19 @@ export default defineConfig((({ mode }) => {
         },
         resolve: {
             alias: {
-                "@": resolve("./src"),
-                "@assets": resolve("./src/assets"),
+                "@": resolve("src"),
+                "@assets": resolve("src/assets"),
 
-                "@types": resolve("./src/types"),
+                "@types": resolve("src/types"),
                 "@components": resolve("./src/components"),
-                "@views": resolve("./src/views"),
-                '@routes': resolve('./src/routes'),
-                '@services': resolve('./src/services'),
+                "@views": resolve("src/views"),
+                '@routes': resolve('src/routes'),
+                '@services': resolve('src/services'),
                 
-                "@api": resolve("./src/api"),
-                "@stores": resolve("./src/stores"),
+                "@api": resolve("src/api"),
+                "@stores": resolve("src/stores"),
 
-                '@utils': resolve('./src/utils')
+                '@utils': resolve('src/utils')
             },
             extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
             define: {

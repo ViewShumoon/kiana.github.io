@@ -33,19 +33,19 @@
 
     "baseUrl": "./",
     "paths": {
-        "@/*": ["./src/*"],
-        "@assets/*": ["./src/assets/*"],
+        "@/*": ["src/*"],
+        "@assets/*": ["src/assets/*"],
 
         "@types/*": ["src/types/*"],
-        "@components/*": ["./src/components/*"],
-        "@views/*": ["./src/views/*"],
+        "@components/*": ["src/components/*"],
+        "@views/*": ["src/views/*"],
         "@routes/*": ["src/routes/*"],
         "@services/*": ["src/services/*"],
 
-        "@api/*": ["./src/api/*"],
+        "@api/*": ["src/api/*"],
         "@stores/*": ["src/stores/*"],
 
-        "@utils/*": ["./src/utils/*"]
+        "@utils/*": ["src/utils/*"]
     },
 		"types": ["vite/client"] 
   },
