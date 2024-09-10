@@ -16,6 +16,7 @@ declare module 'vue' {
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NDatePicker: typeof import('naive-ui')['NDatePicker']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NDivider: typeof import('naive-ui')['NDivider']
     NForm: typeof import('naive-ui')['NForm']
@@ -32,11 +33,13 @@ declare module 'vue' {
     NSpace: typeof import('naive-ui')['NSpace']
     NSwitch: typeof import('naive-ui')['NSwitch']
     NTable: typeof import('naive-ui')['NTable']
+    NTimePicker: typeof import('naive-ui')['NTimePicker']
     NyanCat: typeof import('./../views/NyanCat.vue')['default']
     Random: typeof import('./../views/Random/Random.vue')['default']
     RandomString: typeof import('./../views/Random/RandomString.vue')['default']
     RandomUserName: typeof import('./../views/Random/RandomUserName.vue')['default']
     RedirectTo: typeof import('./../components/RedirectTo.vue')['default']
+    TimeSection: typeof import('./../views/TimeSection.vue')['default']
     WindowProvider: typeof import('./../components/WindowProvider/WindowProvider.vue')['default']
   }
 }
