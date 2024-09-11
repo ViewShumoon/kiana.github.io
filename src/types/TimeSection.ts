@@ -1,13 +1,16 @@
 export class TimeSection {
+    content: string | null;
+
     start: number | null;
     end: number | null;
 
+    // TODO: ref 时有刷新后不执行的 bug
     public get duration(): number {
-        const duration = TimeSection.GetTimeDuration(this.start, this.end);
-        return duration;
+        return TimeSection.GetTimeDuration(this.start, this.end);;
     }
-
+    
     constructor(startTime: number | null, endTime: number | null) {
+        this.content = "";
         this.start = startTime;
         this.end = endTime;
     }
@@ -28,4 +31,8 @@ export class TimeSection {
         const hoursDiff = timeDiff / (1000 * 60 * 60);
         return Math.ceil(hoursDiff * 20) / 20;
     }
+}
+
+export interface DateTimeSection {
+    [key: string]: TimeSection[];
 }
