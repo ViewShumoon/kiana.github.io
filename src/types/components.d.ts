@@ -33,7 +33,6 @@ declare module 'vue' {
     RandomUserName: typeof import('./../views/Random/RandomUserName.vue')['default']
     RedirectTo: typeof import('./../components/RedirectTo.vue')['default']
     TimeInterval: typeof import('./../views/TimeInterval.vue')['default']
-    TimeSection: typeof import('./../views/TimeSection.vue')['default']
     WindowProvider: typeof import('./../components/WindowProvider/WindowProvider.vue')['default']
   }
 }
