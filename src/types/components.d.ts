@@ -14,6 +14,7 @@ declare module 'vue' {
     Maimai: typeof import('./../views/maimai.vue')['default']
     Menus: typeof import('./../components/Menus.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
     NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDatePicker: typeof import('naive-ui')['NDatePicker']
@@ -32,6 +33,7 @@ declare module 'vue' {
     RandomUserName: typeof import('./../views/Random/RandomUserName.vue')['default']
     RedirectTo: typeof import('./../components/RedirectTo.vue')['default']
     TimeInterval: typeof import('./../views/TimeInterval.vue')['default']
+    TimeSection: typeof import('./../views/TimeSection.vue')['default']
     WindowProvider: typeof import('./../components/WindowProvider/WindowProvider.vue')['default']
   }
 }
