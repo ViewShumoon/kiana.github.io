@@ -2,32 +2,31 @@
     <div>
         <h1>Timer List</h1>
        
-        <div v-for="(sections, index) in sections" :key="index">
+        <div v-for="section in sectionsRef">
             <n-space>
-                <n-time-picker v-model:value="sections.start"/>
-                <n-time-picker v-model:value="sections.end"/>
+                <n-time-picker format="HH:mm" v-model:value="section.start"/>
+                <n-time-picker format="HH:mm" v-model:value="section.end"/>
+                       
+                <span>{{ section.duration }} 小时</span>
             </n-space>
-            
-            <span>{{ sections.duration }} 小时</span>
+     
 
             <!-- <n-button @click="removeTimer(0)">Remove</n-button> -->
         </div>
-        <n-button @click="addTimer">Add Timer</n-button>
+        <n-button @click="addSection">Add Section</n-button>
         
     </div>
 </template>
 
 <script setup lang="ts">
-import type { TimeSection } from '@/types/TimeSection';
+import { TimeSection } from '@/types/TimeSection';
 
    
-const sections = ref<TimeSection[]>([]);
-function addTimer() {
-    var newItem : TimeSection = {
-        startTime: new Date(),
-        endTime: null
-    };
-    sections.value.push(newItem);
+const sectionsRef = ref<TimeSection[]>([]);
+
+function addSection() {
+    var newItem : TimeSection = new TimeSection(Date.now(), null);
+    sectionsRef.value.push(newItem);
 };
 
 </script>

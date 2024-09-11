@@ -1,41 +1,30 @@
 export class TimeSection {
-    public startTime: Date;
+    start: number | null;
+    end: number | null;
 
-    public endTime: Date | null;
-
-    public get start(): number | undefined {
-        return this.startTime?.getSeconds();
+    public get duration(): number {
+        const duration = TimeSection.GetTimeDuration(this.start, this.end);
+        return duration;
     }
 
-    public get end(): number | undefined {
-        return this.endTime?.getSeconds();
+    constructor(startTime: number | null, endTime: number | null) {
+        this.start = startTime;
+        this.end = endTime;
     }
 
-    public get duration(): number | undefined  {
-        if (this.endTime) {
-            const duration = TimeSection.GetTimeDuration(
-                this.startTime,
-                this.endTime,
-            );
-            return duration;
-            
-        } else {
-            const duration = TimeSection.GetTimeDuration(
-                this.startTime,
-                new Date(),
-            );
-
-            return duration;
+    static GetTimeDuration(
+        startTime: number | null,
+        endTime: number | null,
+    ): number {
+        if (startTime == null || endTime == null) {
+            return 0;
         }
-    }
 
-    constructor(startTime: Date | null, endTime: Date | null) {
-        this.startTime = startTime || new Date();
-        this.endTime = endTime;
-    }
+        if (startTime != null && endTime == null) {
+            endTime = Date.now();
+        }
 
-    static GetTimeDuration(startTime: Date, endTime: Date): number {
-        const timeDiff = endTime.getTime() - startTime.getTime();
+        const timeDiff = endTime - startTime;
         const hoursDiff = timeDiff / (1000 * 60 * 60);
         return Math.ceil(hoursDiff * 20) / 20;
     }
