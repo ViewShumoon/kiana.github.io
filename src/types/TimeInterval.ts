@@ -1,4 +1,4 @@
-export class TimeSection {
+export class TimeInterval {
     content: string | null;
 
     start: number | null;
@@ -6,7 +6,7 @@ export class TimeSection {
 
     // TODO: ref 时有刷新后不执行的 bug
     public get duration(): number {
-        return TimeSection.GetTimeDuration(this.start, this.end);;
+        return TimeInterval.GetTimeDuration(this.start, this.end);;
     }
     
     constructor(startTime: number | null, endTime: number | null) {
@@ -27,12 +27,12 @@ export class TimeSection {
             endTime = Date.now();
         }
 
-        const timeDiff = endTime - startTime;
+        const timeDiff = Math.abs(endTime - startTime);
         const hoursDiff = timeDiff / (1000 * 60 * 60);
-        return Math.ceil(hoursDiff * 20) / 20;
+        return Math.ceil(hoursDiff * 20) / 20; // TODO: 存在精度问题
     }
 }
 
-export interface DateTimeSection {
-    [key: string]: TimeSection[];
+export interface DateTimeInterval {
+    [key: string]: TimeInterval[];
 }

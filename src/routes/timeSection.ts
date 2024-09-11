@@ -1,11 +1,16 @@
 import { type RouteRecordRaw } from 'vue-router'
 
-export default {
-    path: '/TimeSection',
-    name: 'TimeSection',
-    //alias : ["/section", "/time"],
-    component: () => import("@views/TimeSection.vue"),
-    meta: {
-        title: "Time Section"    
+export default [
+    // {
+    //     path: '/Time',
+    //     redirect: "/TimeInterval"
+    // },
+    {
+        path: '/TimeInterval',
+        name: 'TimeInterval',
+        component: () => import("@/views/TimeInterval.vue"),
+        meta: {
+            title: "Time Interval"
+        }
     }
-} satisfies RouteRecordRaw
+] satisfies RouteRecordRaw[]
