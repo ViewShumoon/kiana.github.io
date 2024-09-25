@@ -1,4 +1,7 @@
+import { RandomHelper } from "@/common/RandomHelper";
+
 export class TimeInterval {
+    id: string;
     content: string | null;
 
     start: number | null;
@@ -6,10 +9,11 @@ export class TimeInterval {
 
     // TODO: ref 时有刷新后不执行的 bug
     public get duration(): number {
-        return TimeInterval.GetTimeDuration(this.start, this.end);;
+        return TimeInterval.GetTimeDuration(this.start, this.end);
     }
     
     constructor(startTime: number | null, endTime: number | null) {
+        this.id = RandomHelper.GenerateRandomString_Letters(8);
         this.content = "";
         this.start = startTime;
         this.end = endTime;
