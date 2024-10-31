@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseDrag: typeof import('./../components/BaseDrag.vue')['default']
+    BogoSort: typeof import('./../views/BogoSort.vue')['default']
     CopyToClipboardButton: typeof import('./../components/CopyToClipboardButton.vue')['default']
     Error: typeof import('./../views/Error.vue')['default']
     HelloWorld: typeof import('./../views/HelloWorld.vue')['default']
@@ -33,6 +34,7 @@ declare module 'vue' {
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    NSlider: typeof import('naive-ui')['NSlider']
     NSpace: typeof import('naive-ui')['NSpace']
     NTable: typeof import('naive-ui')['NTable']
     NTimePicker: typeof import('naive-ui')['NTimePicker']
