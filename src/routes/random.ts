@@ -27,6 +27,15 @@ export default [
                     title: "Random UserName",
                 },
             },
+            {
+                path: "TimestampId",
+                name: "RandomTimestampId",
+                component: () =>
+                    import("@/views/Random/RandomTimestampId.vue"),
+                meta: {
+                    title: "Random TimestampId",
+                },
+            },
         ],
     },
 ] satisfies RouteRecordRaw[];

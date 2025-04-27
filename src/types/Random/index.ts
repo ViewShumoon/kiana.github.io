@@ -20,6 +20,21 @@ export interface RandomUserNameGenerateOptions {
     generateCount: number;
 }
 
+export interface RandomTimestampIdGenerateOptions {
+    prefixString: string,
+    
+    timestampType: TimestampType
+
+    postfixLength: number;
+    includeLowercase: boolean;
+    includeUppercase: boolean;
+}
+
+export enum TimestampType {
+    seconds,
+    milliseconds
+}
+
 export enum LanguageMode {
     english,
     chinese

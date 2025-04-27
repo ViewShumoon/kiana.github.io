@@ -35,6 +35,20 @@ const menuOptions: MenuOption[] = [
       ),
     key: 'RandomUserName'
   },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: 'RandomTimestampId',
+          }
+        },
+        { default: () => '随机时间戳Id' }
+      ),
+    key: 'RandomTimestampId'
+  },
+
 ]
 
 </script>
