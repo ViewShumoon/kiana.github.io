@@ -7,7 +7,8 @@
                         <n-input v-model:value="optionsRef.prefixString" placeholder="请输入前缀" />
                     </n-form-item>
                     <n-form-item label="时间戳类型">
-                        <n-select v-model:value="optionsRef.timestampType" :options="timestampTypeMenus" />
+                        <n-select v-model:value="optionsRef.timestampType" :options="timestampTypeMenus"
+                            @update:value="onTimestampTypeUpdate" />
                         <!-- <n-radio-group v-model:value="timestampType">
                             <n-radio value="seconds">秒级时间戳</n-radio>
                             <n-radio value="milliseconds">毫秒级时间戳</n-radio>
@@ -42,6 +43,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useNow } from '@vueuse/core'
 import { TimestampType, type RandomTimestampIdGenerateOptions } from '@/types/Random';
 import type { SelectOption } from 'naive-ui/es/select/src/interface';
 
@@ -60,12 +62,20 @@ const optionsRef = ref<RandomTimestampIdGenerateOptions>({
 
 const generatedResultsRef = ref<string>();
 
-let timer: number | null = null;
+// let updateCount = 0;
+// let updateThreshold = 1000;
+
+// 缓存字符集
+const charsetDictionary = new Map<number, string>();
+
+const now = useNow();
+
+generateId();
 
 function generateId() {
     const timestamp = optionsRef.value.timestampType === TimestampType.seconds
-        ? Math.floor(Date.now() / 1000)
-        : Date.now()
+        ? Math.floor(now.value.getTime() / 1000)
+        : now.value.getTime()
 
     const randomStr = generateRandomString(optionsRef.value);
     generatedResultsRef.value = `${optionsRef.value.prefixString}${timestamp}${randomStr}`
@@ -83,6 +93,14 @@ function generateRandomString(options: RandomTimestampIdGenerateOptions): string
 }
 
 function getCharset(options: RandomTimestampIdGenerateOptions): string {
+    // 生成缓存键
+    const cacheKey = (options.includeLowercase ? 1 : 0) | (options.includeUppercase ? 2 : 0);
+
+    // 如果缓存中存在，直接返回
+    if (charsetDictionary.has(cacheKey)) {
+        return charsetDictionary.get(cacheKey)!;
+    }
+
     let charset = '';
     if (options.includeLowercase) {
         charset += 'abcdefghijklmnopqrstuvwxyz';
@@ -97,41 +115,31 @@ function getCharset(options: RandomTimestampIdGenerateOptions): string {
     //     charset += '@#$_&-+()/*\"\':;!?';
     // }
     // charset = charset.split('').filter(c => !options.excludeChars.includes(c)).join('');
+
+    // 将结果存入缓存
+    charsetDictionary.set(cacheKey, charset);
     return charset;
 }
 
-function startAutoGenerate() {
-    // 清除现有的定时器
-    if (timer) {
-        clearInterval(timer);
-    }
-
-    // 根据时间戳类型设置不同的刷新间隔
-    const interval = optionsRef.value.timestampType === TimestampType.seconds ? 1000 : 100;
-    
-    // 立即执行一次
+// 监听时间变化
+watch(now, () => {
     generateId();
-    
-    // 设置定时器
-    timer = setInterval(generateId, interval);
+
+    // if (updateCount >= 50) {
+    //     generateId();
+    //     updateCount = 0;
+    // }
+
+    // updateCount++;
+}, { immediate: true });
+
+
+function onTimestampTypeUpdate() {
+    // updateThreshold = optionsRef.value.timestampType === TimestampType.seconds ? 1000 : 100;
+    generateId();
 }
 
-// 组件挂载时启动自动生成
-onMounted(() => {
-    startAutoGenerate();
-});
-
-// 组件卸载时清除定时器
-onUnmounted(() => {
-    if (timer) {
-        clearInterval(timer);
-    }
-});
-
-// 监听时间戳类型变化
-watch(() => optionsRef.value.timestampType, () => {
-    startAutoGenerate();
-});
+;
 </script>
 
 <style scoped></style>
