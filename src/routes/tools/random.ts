@@ -2,7 +2,7 @@ import { type RouteRecordRaw } from "vue-router";
 
 export default [
     {
-        path: "/Random",
+        path: "/Tools/Random",
         name: "Random",
         component: () => import("@/views/Random/Random.vue"),
         redirect: { name: 'RandomString' },

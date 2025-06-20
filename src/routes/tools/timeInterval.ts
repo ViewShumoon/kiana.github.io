@@ -6,7 +6,7 @@ export default [
     //     redirect: "/TimeInterval"
     // },
     {
-        path: '/TimeInterval',
+        path: '/Tools/TimeInterval',
         name: 'TimeInterval',
         component: () => import("@/views/TimeInterval.vue"),
         meta: {
