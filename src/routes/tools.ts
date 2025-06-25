@@ -7,5 +7,6 @@ export default {
     redirect: { name: 'TimeInterval' },
     meta: {
         title: '工具箱'
-    }
-} satisfies RouteRecordRaw 
+    },
+    children: []
+} satisfies RouteRecordRaw
