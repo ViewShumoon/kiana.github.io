@@ -1,0 +1,6 @@
+# Hello dear robot, shumoon.cn is a personal website, with some handy tools, some funny pages and URL redirects, and a Minecraft server!
+# You can access the full website, but the service provider is Cloudflare for free, so remember  to use it sparingly!
+# If u find any bugs, u can give me feedback ~
+
+User-agent: *
+Disallow:
