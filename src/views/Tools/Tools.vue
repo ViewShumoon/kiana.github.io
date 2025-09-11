@@ -33,6 +33,17 @@ const menuOptions: MenuOption[] = [
         { default: () => '时间区间' }
       ),
     key: 'TimeInterval',
+  },  
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: { name: 'Permutations' },
+        },
+        { default: () => '排列组合' }
+      ),
+    key: 'Permutations',
   },
 ];
 </script>
