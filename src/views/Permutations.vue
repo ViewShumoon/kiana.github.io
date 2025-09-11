@@ -1,77 +1,162 @@
 <template>
     <n-card title="排列组合" class="card">
-        <n-form :model="optionsRef" label-placement="left" label-width="120" size="large">
+        <n-form :model="optionsRef" label-placement="left" label-width="90" size="large">
             <n-grid cols="4">
-                <n-grid-item span="2">
+                <n-grid-item span="3">
                     <n-form-item label="元素列表">
-                        <n-dynamic-input v-model:value="optionsRef.elements" placeholder="请输入" :min="2" :max="999" />
+                        <n-dynamic-input style="min-width: 5rem;" v-model:value="optionsRef.elements" placeholder="请输入" :min="2" :max="999" />
                     </n-form-item>
+                    
+                </n-grid-item>
+                <n-grid-item span="3">
                     <n-form-item label="组合大小">
                         <n-input-number v-model:value="optionsRef.size" :min="1" :max="999" />
                     </n-form-item>
                 </n-grid-item>
-                <n-grid-item span="2">
-                </n-grid-item>
             </n-grid>
 
             <n-form-item>
-                <n-button type="primary" size="large" @click="generatePermutations">生成</n-button>
+                <n-button type="primary" size="large" @click="generatePermutations" :loading="isGenerating">
+                    {{ isGenerating ? '生成中...' : '生成' }}
+                </n-button>
             </n-form-item>
         </n-form>
         <n-divider />
 
         <!-- 结果 -->
-        <n-table :bordered="false" :single-line="false" striped>
-            <h3 v-if="generatedResultsRef">
-                共 {{ generatedResultsRef?.length }} 个
-                <CopyToClipboardButton class="ms-2" :value="allPermutationsCopiedString">
+        <div v-if="tableDataRef.length > 0">
+            <h3>
+                共 {{ tableDataRef.length }} 个
+                <CopyToClipboardButton class="ms-2" :value="allPermutationsString">
                     复制所有
                 </CopyToClipboardButton>
             </h3>
-            <tbody>
-                <tr v-for="(value, index) in generatedResultsRef" :key="index">
-                    <td>
-                        <CopyToClipboardButton class="me-2" :value="value.join('')">
-                            复制
-                        </CopyToClipboardButton>
-                        <n-divider vertical />
-                        {{ value.join('') }}
-                    </td>
-                </tr>
-            </tbody>
-        </n-table>
+            <n-data-table
+                :columns="columns"
+                :data="tableDataRef"
+                :pagination="false"
+                :bordered="false"
+                :loading="isGenerating"
+                max-height="1200"
+                virtual-scroll
+            />
+        </div>
     </n-card>
 </template>
 
 <script setup lang="ts">
 
 import type { PermutationsGenerateOptions } from '@/types/Permutations';
-import { ref, reactive, computed } from 'vue';
-
+import { ref, reactive, computed, h } from 'vue';
+import type { DataTableColumns } from 'naive-ui';
 
 const optionsRef = ref<PermutationsGenerateOptions>({
     elements: ["汉", "堡"],
     size: 3,
 });
 
-const generatedResultsRef = ref<string[][]>();
+const tableDataRef = ref<RowData[]>([]);
 
-function generatePermutations() {
-    const elements = optionsRef.value.elements.map(s => s.trim()).filter(s => s.length > 0);
 
-    generatedResultsRef.value = PermutationGenerator.generatePermutationsWithRepetition(elements, optionsRef.value.size);
-};
-
-const allPermutationsCopiedString = computed(() => {
-    if (!generatedResultsRef.value || generatedResultsRef.value.length === 0) {
-        return '';
+// DataTable 配置
+interface RowData {
+  key: string
+}
+const columns: DataTableColumns<RowData> = [
+    {
+        title: '结果',
+        key: 'key',
+        render: (rowData) => rowData.key
     }
-    return generatedResultsRef.value.map(p => p.join('')).join('\n');
-});
+];
+
+
+async function generatePermutations() {
+    isGenerating.value = true;
+    
+    const elements = optionsRef.value.elements.map(s => s.trim()).filter(s => s.length > 0);
+    
+    if (elements.length === 0) {
+        return;
+    }
+
+    
+    tableDataRef.value = [];
+
+    try {
+        const generator = PermutationGenerator.generatePermutationsWithRepetitionAsync(elements, optionsRef.value.size);
+        
+        for await (const permutation of generator) {
+            const line = permutation.join('');
+            tableDataRef.value.push({ key: line });
+        }
+
+    } finally {
+        isGenerating.value = false;
+    }
+}
 
 class PermutationGenerator {
     /**
-     * 生成给定元素集合的可重复排列。
+     * 异步生成给定元素集合的可重复排列。
+     * @param elements 用于生成排列的元素数组。
+     * @param size 每个排列的长度（即要组合的大小）。
+     * @returns 一个异步生成器，逐个产生排列结果。
+     */
+    public static async *generatePermutationsWithRepetitionAsync<T>(elements: T[], size: number): AsyncGenerator<T[], void, unknown> {
+        // 如果输入元素为空或没有元素，则无法生成排列。
+        if (!elements || elements.length === 0) {
+            return;
+        }
+
+        // 如果组合大小为0，则只有一个"空排列"，即一个空数组。
+        if (size === 0) {
+            yield [];
+            return;
+        }
+
+        // 如果组合大小为负数，则返回空。
+        if (size < 0) {
+            return;
+        }
+
+        // 用于在递归过程中构建当前排列。预先分配大小以提高效率。
+        const currentPermutation: T[] = new Array(size);
+
+        // 调用异步递归辅助方法来生成排列。
+        yield* PermutationGenerator.generatePermutationsRecursiveAsync(elements, size, 0, currentPermutation);
+    }
+
+    /**
+     * 异步递归辅助方法，用于生成可重复排列。
+     * @param elements 用于生成排列的元素数组。
+     * @param size 目标排列的长度。
+     * @param currentIndex 当前正在填充的排列中的索引。
+     * @param currentPermutation 当前正在构建的排列。
+     */
+    private static async *generatePermutationsRecursiveAsync<T>(
+        elements: T[],
+        size: number,
+        currentIndex: number,
+        currentPermutation: T[]): AsyncGenerator<T[], void, unknown> {
+        // 基本情况：如果当前索引达到了目标大小，说明一个完整的排列已经构建完成。
+        if (currentIndex === size) {
+            yield [...currentPermutation];
+            return;
+        }
+
+        // 递归步骤：遍历所有可能的元素，并将其放置在当前索引位置。
+        for (let i = 0; i < elements.length; i++) {
+            // 将当前元素放置在当前索引位置。
+            currentPermutation[currentIndex] = elements[i];
+
+            // 递归调用自身，处理排列中的下一个位置。
+            yield* PermutationGenerator.generatePermutationsRecursiveAsync(elements, size, currentIndex + 1, currentPermutation);
+        }
+    }
+
+    /**
+     * 生成给定元素集合的可重复排列（同步版本，保留用于兼容性）。
      * @param elements 用于生成排列的元素数组。
      * @param size 每个排列的长度（即要组合的大小）。
      * @returns 一个包含所有生成排列的列表，每个排列是一个T类型的数组。
@@ -82,7 +167,7 @@ class PermutationGenerator {
             return [];
         }
 
-        // 如果组合大小为0，则只有一个“空排列”，即一个空数组。
+        // 如果组合大小为0，则只有一个"空排列"，即一个空数组。
         if (size === 0) {
             return [[]];
         }
@@ -104,7 +189,7 @@ class PermutationGenerator {
     }
 
     /**
-     * 递归辅助方法，用于生成可重复排列。
+     * 递归辅助方法，用于生成可重复排列（同步版本）。
      * @param elements 用于生成排列的元素数组。
      * @param size 目标排列的长度。
      * @param currentIndex 当前正在填充的排列中的索引。
@@ -135,6 +220,16 @@ class PermutationGenerator {
         }
     }
 }
+
+const allPermutationsString = computed(() => {
+    if (!tableDataRef.value || tableDataRef.value.length === 0) {
+        return '';
+    }
+
+    return tableDataRef.value.map(e=>e.key).join('\n');
+});
+
+const isGenerating = ref(false);
 
 
 generatePermutations();

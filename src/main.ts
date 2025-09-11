@@ -9,6 +9,21 @@ import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadFu
 import { moveDirectivePlugin } from 'lite-move';
 
 const app = createApp(App);
+
+// // 添加全局错误处理
+// app.config.errorHandler = (err, instance, info) => {
+//     console.error('全局错误:', err, info);
+//     // 可以在这里添加错误上报逻辑
+// };
+
+// 添加未捕获的 Promise 错误处理
+window.addEventListener('unhandledrejection', (event) => {
+    if (import.meta.env.DEV){
+        console.error('未处理的 Promise 错误:', event.reason);
+        // 可以在这里添加错误上报逻辑
+    }
+});
+
 app.use(router);
 app.use(pinia)
 

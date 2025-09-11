@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
     const VITE_API_URL = envConfig.VITE_API_URL;
 
     return {
-        base: "./",
+        base: "/",
         server: {
             open: false,
             port: VITE_PORT,

@@ -38,6 +38,6 @@ for (const { parentPath, subRoutes } of allSubRoutes) {
     }
 }
 
-console.log(routes);
+// console.log(routes);
 
 export default routes;
