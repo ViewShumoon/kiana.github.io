@@ -12,8 +12,11 @@ router.beforeEach((to, from, next) => {
 
     // 如果是开发模式且访问根路径，则自动跳转到指定页面
     if (import.meta.env.DEV && to.path === '/') {
-        next(import.meta.env.VITE_DEV_DEFAULT_ROUTE);
-        return;
+        if (import.meta.env.VITE_DEV_DEFAULT_ROUTE != '/')
+        {
+            next(import.meta.env.VITE_DEV_DEFAULT_ROUTE);
+            return;
+        }
     }
 
     next()

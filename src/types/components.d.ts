@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Background: typeof import('./../views/NyanCat/Background.vue')['default']
     BaseDrag: typeof import('./../components/BaseDrag.vue')['default']
     CopyToClipboardButton: typeof import('./../components/CopyToClipboardButton.vue')['default']
     Error: typeof import('./../views/Error.vue')['default']
@@ -44,7 +45,7 @@ declare module 'vue' {
     NSwitch: typeof import('naive-ui')['NSwitch']
     NTable: typeof import('naive-ui')['NTable']
     NTimePicker: typeof import('naive-ui')['NTimePicker']
-    NyanCat: typeof import('./../views/NyanCat.vue')['default']
+    NyanCat: typeof import('./../views/NyanCat/NyanCat.vue')['default']
     Permutations: typeof import('./../views/Permutations.vue')['default']
     Random: typeof import('./../views/Random/Random.vue')['default']
     RandomString: typeof import('./../views/Random/RandomString.vue')['default']
