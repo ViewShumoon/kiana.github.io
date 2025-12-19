@@ -1,0 +1,8 @@
+# Hello dear security researchers or scripts, This website is a purely static frontend application built with Vue 3. It operates without any backend infrastructure or server-side databases. 
+# The site is deployed and served via Cloudflare, utilizing its standard 
+edge security and basic threat protection features.
+# Since there is no server-side logic or data to compromise, please 
+save your time and tools for more meaningful targets.
+
+User-agent: *
+Disallow: /
