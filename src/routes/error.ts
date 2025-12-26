@@ -11,6 +11,15 @@ export default [
     },
     {
         path: '/:pathMatch(.*)*',
-        redirect: "/Error"
+        redirect: to => {
+            // 添加重定向规则，将包含 .php、/wp-contents 或 /wp-includes 的路径重定向到 /hackers.txt
+            const path = to.path.toLowerCase();
+            if (path.includes('.php') || path.includes('/wp-contents') || path.includes('/wp-includes')) {
+                window.location.href = '/hackers.txt';
+                return { path: '/hackers.txt'}
+            }
+
+            return { path: '/Error'} ;
+        },
     }
 ] satisfies RouteRecordRaw[];
