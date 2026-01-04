@@ -1,5 +1,19 @@
 import { type RouteRecordRaw } from "vue-router";
 
+const blockList = [
+    ".php",
+    "wp-contents",
+    "wp-admin",
+    "wp-includes",
+    "docker",
+    ".git",
+    ".ssh",
+    ".env",
+    "yarn.lock",
+    "admin"
+]
+
+
 export default [
     {
         path: "/Error",
@@ -12,12 +26,15 @@ export default [
     {
         path: '/:pathMatch(.*)*',
         redirect: to => {
-            // 添加重定向规则，将包含 .php、/wp-contents 或 /wp-includes 的路径重定向到 /hackers.txt
+            // 将错误的路径重定向到 /hackers.txt
             const path = to.path.toLowerCase();
-            if (path.includes('.php') || path.includes('/wp-contents') || path.includes('/wp-includes')) {
-                window.location.href = '/hackers.txt';
-                return { path: '/hackers.txt'}
-            }
+            blockList.forEach(blocked => {
+                if (path.includes(blocked)) {
+                    window.location.href = '/hackers.txt';
+                    return { path: '/hackers.txt'}
+                }
+                
+            });
 
             return { path: '/Error'} ;
         },
