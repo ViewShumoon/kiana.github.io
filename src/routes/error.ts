@@ -1,7 +1,6 @@
 import { type RouteRecordRaw } from "vue-router";
 
 const blockList = [
-    ".php",
     "wp-contents",
     "wp-admin",
     "wp-includes",
