@@ -10,13 +10,10 @@ export interface RandomStringGenerateOptions {
 }
 
 export interface RandomUserNameGenerateOptions {
-    language: LanguageMode;
+    // language: LanguageMode;
 
     capitalizeFirst: boolean;
-    useFullWords: boolean;
-    dashStriped: boolean;
-
-    wordCount: number;
+    syllableCount: number;
     generateCount: number;
 }
 
