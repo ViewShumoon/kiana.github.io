@@ -1,12 +1,16 @@
 <template>
   <div>
-    <Menus :menus="menuOptions" />
+    <div class="tools-header">
+      <Menus :menus="menuOptions" class="tools-header__menus" />
+      <AccountLogin class="tools-header__login" />
+    </div>
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
 import Menus from '@/components/Menus.vue'
+import AccountLogin from '@/components/AccountLogin.vue'
 import { RouterLink } from 'vue-router';
 import { h } from 'vue';
 import { type MenuOption } from 'naive-ui'
@@ -49,6 +53,21 @@ const menuOptions: MenuOption[] = [
 </script>
 
 <style scoped>
+
+.tools-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tools-header__menus {
+  flex: 1;
+  min-width: 0;
+}
+
+.tools-header__login {
+    margin-right: 1rem;
+}
 
 .tools-content {
   padding: 24px 0 0 0;
