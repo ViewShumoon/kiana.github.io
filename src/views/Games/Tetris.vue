@@ -1,11 +1,11 @@
 <template>
-  <div class="et-root">
-    <div class="et-shell">
-      <section class="et-stage">
+  <div class="gt-root">
+    <div class="gt-shell">
+      <section class="gt-stage">
         <!-- 网格只画固定这么多行，方块掉出去之后下面就是空的 -->
-        <div class="et-well" :style="{ width: COLS * cell + 'px' }">
+        <div class="gt-well" :style="{ width: COLS * cell + 'px' }">
           <div
-            class="et-board"
+            class="gt-board"
             :style="{
               width: COLS * cell + 'px',
               height: gridHeight + 'px',
@@ -15,7 +15,7 @@
           <span
             v-for="c in cells"
             :key="c.key"
-            class="et-cell"
+            class="gt-cell"
             :style="{
               width: cell + 'px',
               height: cell + 'px',
@@ -25,41 +25,40 @@
           />
         </div>
         <!-- 页面被拉长的部分：方块掉到网格外，就靠这段占位往下顶 -->
-        <div class="et-tail" :style="{ height: tailHeight + 'px', width: COLS * cell + 'px' }" />
+        <div class="gt-tail" :style="{ height: tailHeight + 'px', width: COLS * cell + 'px' }" />
       </section>
 
-      <aside class="et-side">
-        <h1 class="et-title">Tetris</h1>
+      <aside class="gt-side">
 
         <!-- 下一个方块：随机一种，去掉空行空列后用网格铺出来，靠 flex 直接居中 -->
-        <div class="et-next">
-          <div class="et-next-grid" :style="{ gridTemplateColumns: `repeat(${previewCols}, ${PREVIEW_CELL}px)` }">
+        <div class="gt-next">
+          <div class="gt-next-grid" :style="{ gridTemplateColumns: `repeat(${previewCols}, ${PREVIEW_CELL}px)` }">
             <span
               v-for="(v, i) in previewCells"
               :key="i"
-              class="et-next-cell"
+              class="gt-next-cell"
               :class="{ 'is-on': !!v }"
               :style="{ width: PREVIEW_CELL + 'px', height: PREVIEW_CELL + 'px', background: v ? PREVIEW.color : 'transparent' }"
             />
           </div>
         </div>
 
-        <dl class="et-stats">
-          <div class="et-stat">
+        <dl class="gt-stats">
+          <div class="gt-stat">
             <dt>Level</dt>
             <dd>1</dd>
           </div>
-          <div class="et-stat">
+          <div class="gt-stat">
             <dt>Score</dt>
             <dd>0</dd>
           </div>
-          <div class="et-stat">
+          <div class="gt-stat">
             <dt>Lines</dt>
             <dd>0</dd>
           </div>
         </dl>
 
-        <ul class="et-keys">
+        <ul class="gt-keys">
           <li><kbd>←</kbd><kbd>→</kbd> 移动</li>
           <li><kbd>↑</kbd> / <kbd>Z</kbd> 旋转</li>
           <li><kbd>↓</kbd> 加速下坠</li>
@@ -101,7 +100,7 @@ const TETROMINOES: { color: string; shape: number[][] }[] = [
   { color: '#fb923c', shape: [[0, 0, 1], [1, 1, 1], [0, 0, 0]] },
 ]
 
-const PREVIEW_CELL = 20 // 预览格子的边长
+const PREVIEW_CELL = 24 // 预览格子的边长
 // 本局只有一个方块，永远不会“落地生成下一个”，所以这里纯粹摆一个随机方块看看
 const PREVIEW = TETROMINOES[Math.floor(Math.random() * TETROMINOES.length)]
 
@@ -309,13 +308,13 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.et-root {
+.gt-root {
   min-height: 100vh;
   padding: 16px;
   color: #e8e8ee;
 }
 
-.et-shell {
+.gt-shell {
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -323,17 +322,17 @@ onUnmounted(() => {
   flex-wrap: wrap;
 }
 
-.et-stage {
+.gt-stage {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.et-well {
+.gt-well {
   position: relative;
 }
 
-.et-board {
+.gt-board {
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.02);
@@ -345,7 +344,7 @@ onUnmounted(() => {
     repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px var(--cell));
 }
 
-.et-cell {
+.gt-cell {
   position: absolute;
   top: 0;
   left: 0;
@@ -354,7 +353,7 @@ onUnmounted(() => {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35), inset 2px 2px 4px rgba(255, 255, 255, 0.28);
 }
 
-.et-abyss {
+.gt-abyss {
   padding: 10px 0;
   font-size: 12px;
   letter-spacing: 3px;
@@ -374,7 +373,7 @@ onUnmounted(() => {
   }
 }
 
-.et-side {
+.gt-side {
   width: 240px;
   padding: 18px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -382,64 +381,64 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.et-title {
+.gt-title {
   margin: 0 0 8px;
   font-size: 24px;
   line-height: 1.15;
 }
 
-.et-desc {
+.gt-desc {
   margin: 0 0 16px;
   font-size: 12px;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.55);
 }
 
-.et-next {
+.gt-next {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px;
+  height: 80px;
   margin-bottom: 12px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.25);
 }
 
-.et-next-grid {
+.gt-next-grid {
   display: grid;
 }
 
-.et-next-cell.is-on {
+.gt-next-cell.is-on {
   border-radius: 2px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35), inset 1px 1px 2px rgba(255, 255, 255, 0.28);
 }
 
-.et-stats {
+.gt-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin: 0 0 16px;
 }
 
-.et-stat {
+.gt-stat {
   padding: 8px 10px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.25);
 }
 
-.et-stat dt {
+.gt-stat dt {
   margin: 0;
-  font-size: 11px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.45);
 }
 
-.et-stat dd {
+.gt-stat dd {
   margin: 2px 0 0;
   font-size: 16px;
   font-weight: 600;
 }
 
-.et-keys {
+.gt-keys {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -448,7 +447,7 @@ onUnmounted(() => {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.et-keys kbd {
+.gt-keys kbd {
   padding: 1px 5px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
