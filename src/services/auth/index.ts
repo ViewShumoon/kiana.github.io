@@ -19,7 +19,7 @@ const UNAVAILABLE_MESSAGE = "登录服务不可用，请稍后重试";
  * 不复用 src/services/axios 的 /api 代理，便于前端部署在 GitHub Pages 时直连 Worker。
  */
 const authClient: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_AUTH_API_URL || "/api",
+    baseURL: import.meta.env.VITE_AUTH_API_URL,
     timeout: 10000,
 });
 
