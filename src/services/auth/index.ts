@@ -80,12 +80,12 @@ async function unwrap<T>(
 export const authApi = {
     /** 用用户输入的 session 字符串换取登录态 */
     login(sessionId: string): Promise<AuthSession> {
-        return unwrap<AuthSession>(authClient.post("/auth/login", { sessionId }));
+        return unwrap<AuthSession>(authClient.post("/v1/login", { sessionId }));
     },
 
     /** 校验请求头上携带的 session 是否仍然有效 */
     verify(silent = false): Promise<AuthSession> {
-        return unwrap<AuthSession>(authClient.get("/auth/verify"), silent);
+        return unwrap<AuthSession>(authClient.get("/v1/verify"), silent);
     },
 };
 
