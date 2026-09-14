@@ -1,54 +1,51 @@
 <template>
-    <n-card title="随机字符串生成器">
-        <n-form :model="optionsRef" label-placement="left" label-width="auto" size="large">
-            <n-grid cols="4">
-                <n-grid-item span="2">
-                    <n-form-item label="包含小写字母">
-                        <n-switch v-model:value="optionsRef.includeLowercase" />
-                    </n-form-item>
-                    <n-form-item label="包含大写字母">
-                        <n-switch v-model:value="optionsRef.includeUppercase" />
-                    </n-form-item>
-                    <n-form-item label="包含数字">
-                        <n-switch v-model:value="optionsRef.includeNumbers" />
-                    </n-form-item>
-                    <n-form-item label="包含特殊字符">
-                        <n-switch v-model:value="optionsRef.includeSpecialChars" />
-                    </n-form-item>
-                </n-grid-item>
+    <n-form class="mt-3 random-tools-form" :model="optionsRef" label-placement="left" label-width="auto" size="large">
+        <n-grid cols="4">
+            <n-grid-item span="2">
+                <n-form-item label="包含小写字母">
+                    <n-switch v-model:value="optionsRef.includeLowercase" />
+                </n-form-item>
+                <n-form-item label="包含大写字母">
+                    <n-switch v-model:value="optionsRef.includeUppercase" />
+                </n-form-item>
+                <n-form-item label="包含数字">
+                    <n-switch v-model:value="optionsRef.includeNumbers" />
+                </n-form-item>
+                <n-form-item label="包含特殊字符">
+                    <n-switch v-model:value="optionsRef.includeSpecialChars" />
+                </n-form-item>
+            </n-grid-item>
 
-                <n-grid-item span="2">
-                    <n-form-item label="生成字符串长度">
-                        <n-input-number v-model:value="optionsRef.length" :min="1" :max="1024" />
-                    </n-form-item>
-                    <n-form-item label="生成数量">
-                        <n-input-number v-model:value="optionsRef.generateCount" :min="1" :max="64" />
-                    </n-form-item>
-                </n-grid-item>
-            </n-grid>
+            <n-grid-item span="2">
+                <n-form-item label="生成字符串长度">
+                    <n-input-number v-model:value="optionsRef.length" :min="1" :max="1024" />
+                </n-form-item>
+                <n-form-item label="生成数量">
+                    <n-input-number v-model:value="optionsRef.generateCount" :min="1" :max="64" />
+                </n-form-item>
+            </n-grid-item>
+        </n-grid>
 
-            <n-form-item label="排除的字符">
-                <n-input v-model:value="optionsRef.excludeChars" placeholder="例如: 0O 1iI" />
-            </n-form-item>
+        <n-form-item label="排除的字符">
+            <n-input v-model:value="optionsRef.excludeChars" placeholder="例如: 0O 1iI" />
+        </n-form-item>
 
-            <n-form-item>
-                <n-button type="primary" size="large" @click="generateStrings">生成</n-button>
-            </n-form-item>
-        </n-form>
-        <n-divider />
-        <n-table :bordered="false" :single-line="false" striped>
-            <tbody>
-                <tr v-for="(value, index) in generatedResultsRef" :key="index">
-                    <td>
-                        <CopyToClipboardButton class="me-2" :value="value">
-                            复制
-                        </CopyToClipboardButton>
-                        <n-divider vertical />
-                        {{ value }}
-                    </td>
-                </tr>
-            </tbody>
-        </n-table></n-card>
+        <n-button type="primary" size="large" @click="generateStrings">生成</n-button>
+     
+    </n-form>
+    <n-table class="mt-4" :bordered="false" :single-line="false" striped>
+        <tbody>
+            <tr v-for="(value, index) in generatedResultsRef" :key="index">
+                <td>
+                    <CopyToClipboardButton class="me-2" :value="value">
+                        复制
+                    </CopyToClipboardButton>
+                    <n-divider vertical />
+                    {{ value }}
+                </td>
+            </tr>
+        </tbody>
+    </n-table>
 </template>
 <script setup lang="ts">
 /*

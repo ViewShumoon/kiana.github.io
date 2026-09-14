@@ -1,5 +1,6 @@
 <template>
-    <n-card title="排列组合" class="card">
+    <div class="container p-3">
+        <n-h2>排列组合</n-h2>
         <n-form :model="optionsRef" label-placement="left" label-width="90" size="large">
             <n-grid cols="4">
                 <n-grid-item span="3">
@@ -41,7 +42,7 @@
                 virtual-scroll
             />
         </div>
-    </n-card>
+    </div>
 </template>
 
 <script setup lang="ts">

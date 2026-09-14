@@ -1,5 +1,5 @@
 <template>
-    <n-menu v-model:value="activeKey" :options="menus" mode="horizontal" responsive/>
+    <n-menu v-model:value="activeKey" :options="menus" :mode="mode" responsive/>
 </template>
 
 <script setup lang="ts">
@@ -9,7 +9,8 @@ import { RouterLink } from 'vue-router';
 const activeKey = ref<string | null>("RandomString")
 
 defineProps<{
-    menus?: MenuOption[]
+    menus?: MenuOption[],
+    mode?: "horizontal" | "vertical"
 }>()
 
 </script>

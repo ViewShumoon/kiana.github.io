@@ -4,7 +4,7 @@ export default [
     {
         path: '/Tools/Permutations',
         name: 'Permutations',
-        component: () => import("@/views/Permutations.vue"),
+        component: () => import("@/views/Tools/Permutations.vue"),
         meta: {
             title: "Permutations"
         }

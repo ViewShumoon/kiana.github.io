@@ -8,7 +8,7 @@ export default [
     {
         path: '/Tools/TimeInterval',
         name: 'TimeInterval',
-        component: () => import("@/views/TimeInterval.vue"),
+        component: () => import("@/views/Tools/TimeInterval.vue"),
         meta: {
             title: "Time Interval"
         }

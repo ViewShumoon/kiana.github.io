@@ -1,46 +1,48 @@
 <template>
-    <n-card title="时间区间">
-        <n-flex justify="space-between">
-            <n-flex>
-                <n-button type="primary" @click="AddInterval">添加一项</n-button>
+    <div class="container p-3">
+        <n-h2>时间区间</n-h2>
+            <n-flex justify="space-between">
+                <n-flex>
+                    <n-button type="primary" @click="AddInterval">添加一项</n-button>
+                </n-flex>
+
+                <n-space>
+                    <n-date-picker v-model:value="currentDate.milliseconds" type="date" />
+                </n-space>
             </n-flex>
 
-            <n-space>
-                <n-date-picker v-model:value="currentDate.milliseconds" type="date" />
-            </n-space>
-        </n-flex>
-
-        <n-divider></n-divider>
-        <n-data-table :columns="columns" :data="dateTimeInterval[currentDate.toString()]" :bordered="true"
-            :row-key="(row) => row.id" v-model:checked-row-keys="selectedRowKeys"
-            @update:checked-row-keys="OnSelectRow">
-        </n-data-table>
+            <n-divider></n-divider>
+            <n-data-table :columns="columns" :data="dateTimeInterval[currentDate.toString()]" :bordered="true"
+                :row-key="(row) => row.id" v-model:checked-row-keys="selectedRowKeys"
+                @update:checked-row-keys="OnSelectRow">
+            </n-data-table>
 
 
-        <template #footer v-if="selectedRowKeys.length > 0">
-            <div class="ms-1 my-3">
-                <n-flex>
-                    <div v-if="selectedRowKeys.length > 0" class="fs-6  my-1">
-                        选择 {{ selectedRowKeys.length }} 项, 总区间大小: {{ totalDuration.toFixed(2) }} 小时
-                    </div>
-                    <div class="mx-3"></div>
-                    <div>
-                        总大小
-                        <n-input-number class="inline-input" v-model:value="restTotalCount" :show-button="false" min="0"
-                            max="65535" />
-                        - 当前大小 {{ totalDuration.toFixed(2) }} =
-                        <span class="ms-2 fs-5" style="color: var(--n-color-target)"><!-- #63e2b7 -->
-                            {{ CalculateTotalInterval() }} 小时
-                        </span>
-                    </div>
-                </n-flex>
-            </div>
-            <!-- <n-grid class="mx-1"  x-gap="12" :cols="2">
+            <div v-if="selectedRowKeys.length > 0">
+                <div class="ms-1 my-3">
+                    <n-flex>
+                        <div v-if="selectedRowKeys.length > 0" class="fs-6  my-1">
+                            选择 {{ selectedRowKeys.length }} 项, 总区间大小: {{ totalDuration.toFixed(2) }} 小时
+                        </div>
+                        <div class="mx-3"></div>
+                        <div>
+                            总大小
+                            <n-input-number class="inline-input" v-model:value="restTotalCount" :show-button="false"
+                                min="0" max="65535" />
+                            - 当前大小 {{ totalDuration.toFixed(2) }} =
+                            <span class="ms-2 fs-5" style="color: var(--n-color-target)"><!-- #63e2b7 -->
+                                {{ CalculateTotalInterval() }} 小时
+                            </span>
+                        </div>
+                    </n-flex>
+                </div>
+                <!-- <n-grid class="mx-1"  x-gap="12" :cols="2">
                 
             </n-grid> -->
 
-        </template>
-    </n-card>
+            </div>
+            
+    </div>
 </template>
 
 <script setup lang="ts">

@@ -3,6 +3,7 @@
     <WindowProvider>
         <RouterView />
     </WindowProvider>
+    <n-global-style />
   </n-config-provider>
 </template>
 

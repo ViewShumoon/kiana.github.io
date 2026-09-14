@@ -1,44 +1,41 @@
 <template>
-    <n-card title="随机ID生成器" class="card">
-        <n-form :model="optionsRef" label-placement="left" label-width="120" size="large">
-            <n-grid cols="4">
-                <n-grid-item span="2">
-                    <n-form-item label="前缀">
-                        <n-input v-model:value="optionsRef.prefixString" placeholder="请输入前缀" />
-                    </n-form-item>
-                    <n-form-item label="时间戳类型">
-                        <n-select v-model:value="optionsRef.timestampType" :options="timestampTypeMenus"
-                            @update:value="onTimestampTypeUpdate" />
-                        <!-- <n-radio-group v-model:value="timestampType">
+
+    <n-form class="mt-3 random-tools-form" :model="optionsRef" label-placement="left" label-width="120" size="large">
+        <n-grid cols="4">
+            <n-grid-item span="2">
+                <n-form-item label="前缀">
+                    <n-input v-model:value="optionsRef.prefixString" placeholder="请输入前缀" />
+                </n-form-item>
+                <n-form-item label="时间戳类型">
+                    <n-select v-model:value="optionsRef.timestampType" :options="timestampTypeMenus"
+                        @update:value="onTimestampTypeUpdate" />
+                    <!-- <n-radio-group v-model:value="timestampType">
                             <n-radio value="seconds">秒级时间戳</n-radio>
                             <n-radio value="milliseconds">毫秒级时间戳</n-radio>
                         </n-radio-group> -->
-                    </n-form-item>
-                </n-grid-item>
-                <n-grid-item span="2">
-                    <n-form-item label="后缀长度">
-                        <n-input-number v-model:value="optionsRef.postfixLength" :min="0" :max="32" />
-                    </n-form-item>
-                    <n-form-item label="包含小写字母">
-                        <n-switch v-model:value="optionsRef.includeLowercase" />
-                    </n-form-item>
-                    <n-form-item label="包含大写字母">
-                        <n-switch v-model:value="optionsRef.includeUppercase" />
-                    </n-form-item>
-                </n-grid-item>
-            </n-grid>
+                </n-form-item>
+            </n-grid-item>
+            <n-grid-item span="2">
+                <n-form-item label="后缀长度">
+                    <n-input-number v-model:value="optionsRef.postfixLength" :min="0" :max="32" />
+                </n-form-item>
+                <n-form-item label="包含小写字母">
+                    <n-switch v-model:value="optionsRef.includeLowercase" />
+                </n-form-item>
+                <n-form-item label="包含大写字母">
+                    <n-switch v-model:value="optionsRef.includeUppercase" />
+                </n-form-item>
+            </n-grid-item>
+        </n-grid>
 
-        </n-form>
+    </n-form>
 
-        <n-divider />
-
-        <div>
-            <CopyToClipboardButton class="me-2" :value="generatedResultsRef">
-                复制
-            </CopyToClipboardButton>
-            {{ generatedResultsRef }}
-        </div>
-    </n-card>
+    <div class="mt-4" >
+        <CopyToClipboardButton class="me-2" :value="generatedResultsRef">
+            复制
+        </CopyToClipboardButton>
+        {{ generatedResultsRef }}
+    </div>
 </template>
 
 <script setup lang="ts">
