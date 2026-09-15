@@ -4,7 +4,7 @@ export default [
     {
         path: "/Tools/Random",
         name: "Random",
-        component: () => import("@/views/Random/Random.vue"),
+        component: () => import("@/views/Tools/Random/Random.vue"),
         redirect: { name: 'RandomString' },
         meta: {
             title: "Random",
@@ -13,7 +13,7 @@ export default [
             {
                 path: "String",
                 name: "RandomString",
-                component: () => import("@/views/Random/RandomString.vue"),
+                component: () => import("@/views/Tools/Random/RandomString.vue"),
                 meta: {
                     title: "Random String",
                 },
@@ -22,7 +22,7 @@ export default [
                 path: "UserName",
                 name: "RandomUserName",
                 component: () =>
-                    import("@/views/Random/RandomUserName.vue"),
+                    import("@/views/Tools/Random/RandomUserName.vue"),
                 meta: {
                     title: "Random UserName",
                 },
@@ -31,7 +31,7 @@ export default [
                 path: "TimestampId",
                 name: "RandomTimestampId",
                 component: () =>
-                    import("@/views/Random/RandomTimestampId.vue"),
+                    import("@/views/Tools/Random/RandomTimestampId.vue"),
                 meta: {
                     title: "Random TimestampId",
                 },
