@@ -1,22 +1,30 @@
 <template>
     <div class="container p-3">
-        <n-flex justify="space-between" align="center" class="mb-3">
+        <n-flex justify="space-between" class="mb-3">
             <n-h2 class="mb-0">日语五十音图</n-h2>
-            <n-radio-group v-model:value="mode" name="kana-mode">
-                <n-radio-button v-for="opt in modeOptions" :key="opt.value" :value="opt.value">
-                    {{ opt.label }}
-                </n-radio-button>
-            </n-radio-group>
+            <n-space vertical align="end" size="small">
+                <n-radio-group v-model:value="mode" name="kana-mode">
+                    <n-radio-button v-for="opt in modeOptions" :key="opt.value" :value="opt.value">
+                        {{ opt.label }}
+                    </n-radio-button>
+                </n-radio-group>
+                <n-space class="mt-2" align="center" size="small">
+                    <span>显示两者</span>
+                    <n-switch v-model:value="showAll" />
+                </n-space>
+            </n-space>
         </n-flex>
 
-        <n-space vertical size="large">
+        <n-space vertical>
             <n-card v-for="section in sections" :key="section.title" :title="section.title" size="small" bordered>
-                <div class="table-wrap">
-                    <table class="gojuon-table">
+                <div class="d-flex justify-content-center">
+                    <n-table class="gojuon-table">
                         <thead>
                             <tr>
-                                <th class="row-head"></th>
-                                <th v-for="col in section.columnLabels" :key="col">{{ col }}</th>
+                                <th></th>
+                                <th class="row-label" v-for="col in section.columnLabels" :key="col">
+                                    {{ col }}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,38 +32,57 @@
                                 <td class="row-label">{{ row.label }}</td>
                                 <td v-for="(cell, ci) in row.cells" :key="ci">
                                     <button v-if="cell" class="kana-btn" type="button" @click="speak(cell)">
-                                        <span class="kana">{{ kanaOf(cell) }}</span>
-                                        <span class="romaji">{{ cell.romaji }}</span>
+                                        <span class="kana">
+                                            {{ kanaOf(cell) }}
+                                            <span v-if="showAll" class="other-kana ps-4">{{ otherKanaOf(cell) }}</span>
+                                        </span>
+                                        <span class="romaji">{{
+                                            cell.romaji
+                                            }}</span>
                                     </button>
-                                    <span v-else class="empty">-</span>
+                                    <!-- <span v-else></span> -->
                                 </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </n-table>
                 </div>
             </n-card>
 
-            <n-card title="促音 / 长音" size="small" bordered>
-                <n-grid :cols="2" :x-gap="12" responsive="screen" item-responsive>
-                    <n-gi span="0:2 640:1">
-                        <div class="extra-title">促音（停顿一拍）</div>
-                        <div class="extra-row">
-                            <button class="kana-btn" type="button" @click="speak(sokuon)">
-                                <span class="kana">{{ kanaOf(sokuon) }}</span>
-                                <span class="romaji">{{ sokuon.romaji }}</span>
-                            </button>
-                            <span class="extra-desc">{{ mode === 'h' ? 'がっこう (gakkou) = 学校' : 'キップ (kippu) = 票' }}</span>
+            <n-card title="促音" bordered>
+                <n-flex>
+                    <button class="kana-btn" style="width: 4rem" type="button" @click="speak(sokuon)">
+                        <span class="kana">{{ kanaOf(sokuon) }}</span>
+                        <span class="romaji">{{ sokuon.romaji }}</span>
+                    </button>
+                    <div>
+                        <div>小寫的「つ」，表示停頓一拍。</div>
+                        <div>
+                            {{
+                                mode === "h"
+                                    ? "例： がっこう (gakkou) = 学校"
+                                    : "例：キップ (kippu) = 票"
+                            }}
                         </div>
-                    </n-gi>
-                    <n-gi span="0:2 640:1">
-                        <div class="extra-title">长音（延长母音）</div>
-                        <div class="extra-row">
-                            <span class="extra-desc">
-                                {{ mode === 'h' ? '以母音相连表示：ああ / いい / うう / ええ / おう' : '用长音记号「ー」表示：コーヒー (koohii)' }}
-                            </span>
+                    </div>
+                </n-flex>
+            </n-card>
+            <n-card title="長音" bordered>
+                <n-flex>
+                    <div>ああ／いい／うう／ええ／おお</div>
+                    <n-divider vertical />
+                    <div>
+                        <div v-if="mode === 'h'">
+                            <div>
+                                平假名的長音通常以母音相連表示，不使用「ー」
+                            </div>
+                            <div>例： (okaasan)、 (oneesan)</div>
                         </div>
-                    </n-gi>
-                </n-grid>
+                        <div v-else>
+                            <div>用长音记号「ー」表示</div>
+                            <div>例：コーヒー (koohii)</div>
+                        </div>
+                    </div>
+                </n-flex>
             </n-card>
         </n-space>
     </div>
@@ -79,6 +106,7 @@ interface GojuonSection {
 type KanaMode = 'h' | 'k';
 
 const mode = ref<KanaMode>('h');
+const showAll = ref<boolean>(false);
 const modeOptions = [
     { label: '平假名', value: 'h' },
     { label: '片假名', value: 'k' },
@@ -88,8 +116,13 @@ function kanaOf(cell: KanaCell): string {
     return mode.value === 'h' ? cell.h : cell.k;
 }
 
+/** 与当前模式相反的假名（全显示时展示） */
+function otherKanaOf(cell: KanaCell): string {
+    return mode.value === 'h' ? cell.k : cell.h;
+}
+
 // 促音小写字符（随模式切换）
-const sokuon: KanaCell = { h: 'っ', k: 'ッ', romaji: '(小つ)' };
+const sokuon: KanaCell = { h: 'っ', k: 'ッ', romaji: 'tsu' };
 
 const sections: GojuonSection[] = [
     {
@@ -97,7 +130,7 @@ const sections: GojuonSection[] = [
         columnLabels: ['a', 'i', 'u', 'e', 'o'],
         rows: [
             {
-                label: '',
+                label: 'a',
                 cells: [
                     { h: 'あ', k: 'ア', romaji: 'a' },
                     { h: 'い', k: 'イ', romaji: 'i' },
@@ -198,12 +231,12 @@ const sections: GojuonSection[] = [
             },
             {
                 label: '',
-                cells: [null, null, null, null, { h: 'ん', k: 'ン', romaji: 'n' }],
+                cells: [{ h: 'ん', k: 'ン', romaji: 'n' }, null, null, null, null],
             },
         ],
     },
     {
-        title: '浊音',
+        title: '濁音',
         columnLabels: ['a', 'i', 'u', 'e', 'o'],
         rows: [
             {
@@ -249,7 +282,7 @@ const sections: GojuonSection[] = [
         ],
     },
     {
-        title: '半浊音',
+        title: '半濁音',
         columnLabels: ['a', 'i', 'u', 'e', 'o'],
         rows: [
             {
@@ -371,22 +404,10 @@ function speak(cell: KanaCell) {
 </script>
 
 <style scoped>
-.mb-0 {
-    margin-bottom: 0;
-}
-
-.mb-3 {
-    margin-bottom: 1rem;
-}
-
-.table-wrap {
-    overflow-x: auto;
-}
-
-.gojuon-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
+@media (min-width: 992px) {
+    .gojuon-table {
+        max-width: 900px;
+    }
 }
 
 .gojuon-table th,
@@ -402,26 +423,16 @@ function speak(cell: KanaCell) {
     background: var(--n-color-modal, rgba(0, 0, 0, 0.02));
 }
 
-.row-head,
 .row-label {
-    width: 48px;
     font-weight: 600;
     color: rgba(128, 128, 128, 0.9);
-}
-
-.row-label {
-    padding: 4px 0;
 }
 
 .kana-btn {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    height: 100%;
-    min-height: 64px;
-    padding: 4px;
+    padding: 0.8rem 0.25rem;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -435,42 +446,24 @@ function speak(cell: KanaCell) {
 }
 
 .kana {
-    font-size: 26px;
-    line-height: 1.2;
+    font-size: 1.6rem;
+    line-height: 1.3;
 }
 
 .romaji {
-    font-size: 13px;
+    font-size: 1rem;
+    /* line-height: 1.2; */
     color: rgba(128, 128, 128, 0.95);
 }
 
-.empty {
-    display: block;
-    min-height: 64px;
-    line-height: 64px;
-    color: rgba(128, 128, 128, 0.35);
+.other-kana {
+    font-size: 1.7rem;
+    line-height: 1.2;
+    color: rgba(128, 128, 128, 0.95);
 }
 
 .extra-title {
     font-weight: 600;
     margin-bottom: 8px;
-}
-
-.extra-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.extra-row .kana-btn {
-    width: 64px;
-    min-height: 56px;
-    border: 1px solid var(--n-border-color, rgba(0, 0, 0, 0.12));
-    border-radius: 6px;
-}
-
-.extra-desc {
-    color: rgba(128, 128, 128, 0.95);
-    font-size: 14px;
 }
 </style>
