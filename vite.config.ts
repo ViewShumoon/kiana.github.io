@@ -66,7 +66,21 @@ export default defineConfig(({ mode }) => {
             }),
         ],
         build: {
-            sourcemap: true,
+            sourcemap: false,
+            chunkSizeWarningLimit: 1024,
+            rollupOptions: {
+                output: {
+                    codeSplitting: {
+                        groups: [
+                            {
+                                name: "vendor",
+                                test: /[\\/]node_modules[\\/]/,
+                                priority: 10,
+                            },
+                        ],
+                    },
+                },
+            },
         },
         resolve: {
             alias: {
