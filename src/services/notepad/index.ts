@@ -46,18 +46,18 @@ async function unwrap<T>(
 export const notepadApi = {
     /** 进入记事本：不存在则创建，返回当前内容快照 */
     join(id: string): Promise<NotepadSnapshot> {
-        return unwrap<NotepadSnapshot>(notepadClient.post("/notepad/v1/join", { id }));
+        return unwrap<NotepadSnapshot>(notepadClient.post("/app/notepad/join", { id }));
     },
 
     /** 拉取云端最新内容（兼作心跳） */
     pull(id: string): Promise<NotepadSnapshot> {
-        return unwrap<NotepadSnapshot>(notepadClient.get("/notepad/v1/pull", { params: { id } }));
+        return unwrap<NotepadSnapshot>(notepadClient.get("/app/notepad/pull", { params: { id } }));
     },
 
     /** 手动上传：baseVersion 为本地依据的云端版本，冲突时 saved=false 且返回最新快照 */
     push(id: string, content: string, baseVersion: number, force = false): Promise<NotepadPushResult> {
         return unwrap<NotepadPushResult>(
-            notepadClient.post("/notepad/v1/push", { id, content, baseVersion, force }),
+            notepadClient.post("/app/notepad/push", { id, content, baseVersion, force }),
         );
     },
 };
