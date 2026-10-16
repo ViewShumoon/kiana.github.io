@@ -7,6 +7,9 @@ export interface RandomStringGenerateOptions {
     excludeChars: string;
     length: number;
     generateCount: number;
+
+    // 精简密码模式：大写字母和特殊字符只在开头各生成 1 个，数字集中在末尾，中间为小写字母
+    compactMode: boolean;
 }
 
 export interface RandomUserNameGenerateOptions {

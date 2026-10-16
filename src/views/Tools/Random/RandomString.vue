@@ -14,6 +14,12 @@
                 <n-form-item label="包含特殊字符">
                     <n-switch v-model:value="optionsRef.includeSpecialChars" />
                 </n-form-item>
+                <n-form-item label="精简密码">
+                    <n-switch v-model:value="optionsRef.compactMode" />
+                    <n-text v-if="optionsRef.compactMode" class="ms-3" depth="3">
+                        大写字母、特殊字符只在开头各生成 1 个，数字放在末尾，其余为小写字母
+                    </n-text>
+                </n-form-item>
             </n-grid-item>
 
             <n-grid-item span="2">
@@ -72,6 +78,11 @@
 import type { RandomStringGenerateOptions } from '@/types/Random';
 
 
+const LOWERCASE_CHARS = 'abcdefghijklmnopqrstuvwxyz';
+const UPPERCASE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const NUMBER_CHARS = '0123456789';
+const SPECIAL_CHARS = '@#$_&-+()/*\"\':;!?';
+
 const optionsRef = ref<RandomStringGenerateOptions>({
     includeLowercase: true,
     includeUppercase: true,
@@ -80,6 +91,7 @@ const optionsRef = ref<RandomStringGenerateOptions>({
     excludeChars: '',
     length: 16,
     generateCount: 4,
+    compactMode: true,
 });
 
 const generatedResultsRef = ref<string[]>([]);
@@ -93,6 +105,10 @@ function generateStrings() {
 }
 
 function generateRandomString(options: RandomStringGenerateOptions): string {
+    if (options.compactMode) {
+        return generateCompactString(options);
+    }
+
     let charset = getCharset(options);
 
     let result = '';
@@ -103,19 +119,75 @@ function generateRandomString(options: RandomStringGenerateOptions): string {
     return result;
 }
 
+// 精简密码模式：大写字母、特殊字符只在开头各生成 1 个，数字集中在末尾，中间为小写字母
+function generateCompactString(options: RandomStringGenerateOptions): string {
+    let prefix = '';
+
+    if (options.includeUppercase) {
+        prefix += pickRandom(removeExcludedChars(UPPERCASE_CHARS, options));
+    }
+    if (options.includeSpecialChars) {
+        prefix += pickRandom(removeExcludedChars(SPECIAL_CHARS, options));
+    }
+
+    const lowercaseCharset = removeExcludedChars(LOWERCASE_CHARS, options);
+    const numberCharset = removeExcludedChars(NUMBER_CHARS, options);
+
+    const canUseLowercase = options.includeLowercase && lowercaseCharset.length > 0;
+    const canUseNumbers = options.includeNumbers && numberCharset.length > 0;
+
+    const remaining = Math.max(options.length - prefix.length, 0);
+
+    // 末尾数字约占剩余长度的三分之一；小写字母不可用时剩余长度全部使用数字
+    let numberCount = 0;
+    if (canUseNumbers) {
+        numberCount = Math.min(canUseLowercase ? Math.max(1, Math.ceil(remaining / 3)) : remaining, remaining);
+    }
+
+    const letterCount = remaining - numberCount;
+    // 小写字母与数字都不可用时，回退到完整字符集填充中间部分
+    const letterCharset = canUseLowercase ? lowercaseCharset : getCharset(options);
+
+    let result = prefix;
+    for (let i = 0; i < letterCount; i++) {
+        result += pickRandom(letterCharset);
+    }
+    for (let i = 0; i < numberCount; i++) {
+        result += pickRandom(numberCharset);
+    }
+
+    return result.slice(0, options.length);
+}
+
+function pickRandom(charset: string): string {
+    if (charset.length === 0) {
+        return '';
+    }
+
+    return charset[Math.floor(Math.random() * charset.length)];
+}
+
+function removeExcludedChars(charset: string, options: RandomStringGenerateOptions): string {
+    if (!options.excludeChars) {
+        return charset;
+    }
+
+    return charset.split('').filter(c => !options.excludeChars.includes(c)).join('');
+}
+
 function getCharset(options: RandomStringGenerateOptions): string {
     let charset = '';
     if (options.includeLowercase) {
-        charset += 'abcdefghijklmnopqrstuvwxyz';
+        charset += LOWERCASE_CHARS;
     }
     if (options.includeUppercase) {
-        charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        charset += UPPERCASE_CHARS;
     }
     if (options.includeNumbers) {
-        charset += '0123456789';
+        charset += NUMBER_CHARS;
     }
     if (options.includeSpecialChars) {
-        charset += '@#$_&-+()/*\"\':;!?';
+        charset += SPECIAL_CHARS;
     }
     charset = charset.split('').filter(c => !options.excludeChars.includes(c)).join('');
     return charset;
